@@ -18,3 +18,10 @@ Route::delete('/carros/{id}', [carroController::class, 'destroy']);
 // a parte de fazer uma api é bem simples, até para testar no imsomnia, é só criar as rotas e
 // depois criar o controller e o model, e depois criar a migration para criar a
 //  tabela no banco de dados, e depois é só testar no imsomnia, que é bem dboas
+
+// consumir a api aqui
+Route::get('/posts', function () {
+    $response = Http::get('https://jsonplaceholder.typicode.com/posts');
+
+    return $response->json();
+});
