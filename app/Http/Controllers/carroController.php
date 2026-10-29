@@ -9,9 +9,16 @@ class carroController extends Controller
 {
     // CRUD de carros
 
+    protected $carroRepository;
+
+    public function __construct(carroRepository $carroRepository)
+    {
+        $this->carroRepository = $carroRepository;
+    }
+
     public function index()
     {
-        $carros = Carro::all();
+        $carros = $this->carroRepository->search();
         return response()->json($carros);
     }
 
@@ -29,15 +36,18 @@ class carroController extends Controller
 
     public function update(Request $request, $id)
     {
-        $carro = Carro::find($id);
-        $carro->update($request->all());
+            $carro = $this->carroRepository->update(
+            $id,
+            $request->all()
+        );
+
         return response()->json($carro);
     }
 
     public function destroy($id)
     {
-        $carro = Carro::find($id);
-        $carro->delete();
+        $this->carroRepository->delete($id);
+
         return response()->json(null, 204);
     }
 }
